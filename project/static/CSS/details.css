@@ -1,0 +1,156 @@
+/* Global styles */
+
+:root {
+    --main-color: #3B8457;
+}
+
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    background: #3B8457;
+}
+
+/* Sidebar styles */
+
+.container .home, .container .home2 {
+    background: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 265px;
+    height: 100%;
+    padding: 20px 0;
+    
+}
+
+.container .home .logo, .container .home2 .logo {
+    margin: 47px 0 50px;
+    text-align: center;
+}
+
+.container .home .logo img, .container .home2 .logo img {
+    display: block;
+    width: 230px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.container .home ul li a, .container .home2 ul li a {
+    display: block;
+    padding: 20px 30px;
+    border-bottom: 1px solid #f3b73e;
+    color: white;
+    font-size: 16px;
+    position: relative;
+}
+
+.container .home ul li a .icon, .container .home2 ul li a .icon {
+    width: 30px;
+    display: inline-block;
+}
+
+.container .home ul li a:hover, .container .home2 ul li a:hover {
+    color: black;
+    background: #3B8457;
+    border-right: 2px solid #3B8457;
+}
+
+.container .home ul li a:hover .icon, .container .home2 ul li a:hover .icon {
+    color: black;
+}
+
+/* Product details page styles */
+
+.container .product-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 300px;
+}
+
+.product-details .product-image {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.product-details .product-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.product-details .product-info {
+    flex: 2;
+}
+
+.product-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.product-details p {
+    margin-bottom: 8px;
+}
+
+.amount-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.amount-selector button {
+    background-color: #8f3013;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.amount-selector button:hover {
+    background-color: #2C6E4B;
+}
+
+.amount-selector input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+    padding: 5px;
+}
+
+.product-details button , .btn  {
+    background-color: #8f0606;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-details button:hover {
+    background-color: #2C6E4B;
+}
+
+.btn  {
+    background-color: #8f0606 !important;
+    color: white !important;
+    border: solid 1px black;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}

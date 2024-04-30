@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+  
+    <link rel="stylesheet" href="{% static 'CSS/venduer.css' %}">
+</head>
+<body>
+
+  <div class="container">
+      <div class="home">
+        <div class="logo">
+          <img src="../my photo/LOGOO.jpg" alt="logo" />
+        </div>
+        <ul>
+          <li>
+            <a href="home.html" >
+              <span class="icon"><i class="fa-solid fa-desktop"></i></span>
+              <span>home</span>
+            </a>
+          </li>
+          <li>
+            <a href="vendeur.html" >
+              <span class="icon"><i class="fas fa-user-friends"></i></span>
+              <span>all products</span>
+            </a>
+          </li>
+          <li>
+            <a href="vendeur.html" >
+              <span class="icon"><i class="fas fa-user-friends"></i></span>
+              <span>categories</span>
+            </a>
+          </li>
+          <li>
+            <a href="command.html" >
+              <span class="icon"><i class="fa-solid fa-box"></i></span>
+              <span>poubelle</span>
+            </a>
+          </li>
+          <li>
+            <a href="Login.html">
+              <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="dashboard">
+    {% for category in all_categories %}
+      
+    <a href="{% url 'vendeur:products' category.slug   %}" class="category-card">
+      <h3>{{category.title}}</h3>
+
+    </a>
+    {% endfor %}
+     
+      <!-- Add more category cards here -->
+    </div> 
+  
+</body>
+</html>

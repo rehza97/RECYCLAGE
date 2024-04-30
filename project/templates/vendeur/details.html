@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/details.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="home">
+        <div class="logo">
+            <img src="../my photo/LOGOO.jpg" alt="logo" />
+        </div>
+        <ul>
+            <li>
+                <a href="home.html" >
+                    <span class="icon"><i class="fa-solid fa-desktop"></i></span>
+                    <span>home</span>
+                </a>
+            </li>
+            <li>
+                <a href="vendeur.html" >
+                    <span class="icon"><i class="fas fa-user-friends"></i></span>
+                    <span>all products</span>
+                </a>
+            </li>
+            <li>
+                <a href="vendeur.html" >
+                    <span class="icon"><i class="fas fa-user-friends"></i></span>
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="command.html" >
+                    <span class="icon"><i class="fa-solid fa-box"></i></span>
+                    <span>poubelle</span>
+                </a>
+            </li>
+            <li>
+                <a href="Login.html">
+                    <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="product-details">
+        <div class="product-image">
+            <img src="{{product.image.url}}" alt="Product 1">
+        </div>
+        <div class="product-info">
+            <h2>{{product.title}}</h2>
+            <p>Price: {{product.price_per_kilo}} DZD/Kg</p>
+            <p>type: {{product.type}}</p>
+            <div class="amount-selector">
+                <button onclick="decreaseAmount()">-</button>
+                <input type="text" id="amount" value="1">
+                <button onclick="increaseAmount()">+</button>
+            </div>
+            <p>Description: {{product.desc}}</p>
+            <p>Category: {{product.category}}</p>
+            <button onclick="addToCart()"> <a class="btn" href="{% url 'vendeur:add_poubelle' product.id %}">Add to cart</a
+                Add to Cart
+            </a></button>
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    function increaseAmount() {
+        var amountInput = document.getElementById("amount");
+        var currentAmount = parseInt(amountInput.value);
+        amountInput.value = currentAmount + 1;
+    }
+
+    function decreaseAmount() {
+        var amountInput = document.getElementById("amount");
+        var currentAmount = parseInt(amountInput.value);
+        if (currentAmount > 1) {
+            amountInput.value = currentAmount - 1;
+        }
+    }
+
+    function addToCart() {
+        var selectedAmount = document.getElementById("amount").value;
+        alert("Added " + selectedAmount + " items to the cart!");
+    }
+</script>
+
+</body>
+</html>

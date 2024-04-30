@@ -1,0 +1,92 @@
+:root {
+    --main-color: #3B8457;
+}
+
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    background: #3B8457;
+}
+
+.container .home {
+    background: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 265px;
+    height: 100%;
+    padding: 20px 0;
+}
+
+.container .home .logo {
+    margin: 47px 0 50px;
+    text-align: center;
+}
+
+.container .home .logo img {
+    display: block;
+    width: 230px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.container .home ul li a {
+    display: block;
+    padding: 20px 30px;
+    border-bottom: 1px solid #f3b73e;
+    color: white;
+    font-size: 16px;
+    position: relative;
+}
+
+.container .home ul li a .icon {
+    width: 30px;
+    display: inline-block;
+}
+
+.container .home ul li a:hover {
+    color: black;
+    background: #3B8457;
+    border-right: 2px solid #3B8457;
+}
+
+.container .home ul li a:hover .icon {
+    color: black;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+    margin-left: 300px ;
+}
+
+.stat-box {
+    /* Your stat box styles */
+}
+
+.stat-box h2 {
+    /* Your stat box h2 styles */
+}
+
+.stat-box p {
+    /* Your stat box p styles */
+}
+
+.category-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}

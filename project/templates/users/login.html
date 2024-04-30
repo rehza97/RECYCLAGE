@@ -1,0 +1,33 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>login</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/Login.css' %}">
+
+</head>
+<body>
+
+    
+
+
+    <form class="box" method="POST">
+        <div class="logo"> 
+            <img src=" {% static 'img/LOGOO.jpg' %}" alt="logo" />
+        </div>
+    
+    <h1>Login</h1>
+        {% csrf_token %}
+        <input type="email" name="username" placeholder="email">
+        <input type="password" name="password" placeholder="password" >
+        <input type="submit">
+    <p1>forgot password ? </p1>
+
+    </form>
+    
+</body>
+</html>

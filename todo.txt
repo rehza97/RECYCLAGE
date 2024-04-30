@@ -1,0 +1,113 @@
+collecteuer :
+ADMINfel choose.html rah ykhayer wch howa id kan  
+    NORMAL
+        rah yroh lel home.html
+        fel commands (ya3ni kyn command)
+        gla3 ta3 vendeurs
+        sidebar:
+            venduer:
+                tal9a histoty ta3 les venduer okol
+            command:
+                tal9a histoty ta3 les command okol
+
+                fel commad_etat has 3 state 
+                    availabe  
+                    on hold  
+                    out of stock
+                option : unknow
+    ADMIN
+        rah yroh lel home2.html
+        fel commands (ya3ni kyn command)
+        sidebar :
+            collecteur:
+                fihe list ta3 les collecteurs w fiha yzid collecter w ygla3hom wala edit
+            venduer : 
+                y9dr ychof infos ta3hom w ya9dr ybloki ay whd 
+            command : 
+                ychof la list ta3hom w ychof status ta3ha
+            all products:
+                list of all products posted(add,details,update,delete)
+            category:
+                add new categories or delete existing ones
+
+VONDUER : 
+    yhal compte done 
+    yadih lel page ta3 category(ydirohm admin)
+    ykhyr whda fihom ychof les produit li kynin fel category hadik 
+    each produit has details page ta3o + prix ta3 single prod price and total price in cans he choosed ch3al men whd (cart like)
+    when validat tban 3ndk collecter fel list des command w yabn fel la list ta3 les vendeur   
+
+
+make it multi lang : fr,eng,ar
+
+dead line of this project : 14j in total  11/05/2024
+
+
+ROAD : 
+    ida kan venduer : 
+        rah ysjl fel site w moraha yrid login ki ynhal compte ta3o rah ytwj lel dashbvaord ta3i fihe les categroy ta3 les produits ykhayer categroy tjih page fiha les produit tab3in had category ykhary produit yji details page ta3 had produit fiha buy avec nbr of contiti ta3h 3ndo fiha |-|1|+| totel : 2500da ydir command hadi rah tanzad fel cart ta3i ki ykml shooping yodkhol fel cart yal9a kolch w ydir command 
+    ida kan collecter admin : 
+        3ndo ydir login(superuser) ychof la page lwla home2.html fiha 
+            vendeur: fiha nomber ta3 les vendeur li halo compte m3dna
+            commands : ychof nomber de commands livré/totel and on_hold/totel  
+            colecter :  nbr of collecter
+
+        side_bare :
+            collecter : 
+                list ta3 les collecteuer li 3adna and add update and delete them 
+            
+            VONDUER : 
+                list ta3 les VONDUER li 3adna and block them  
+            
+            command :
+                list des command avec state ta3hom and alert when the command is older then 7 days
+    
+    ida kan collecteur normal :
+        collecter : 
+                list ta3 les collecteuer li 3adna  
+            
+        VONDUER : 
+                list ta3 les VONDUER li 3adna and report them 
+        side_bare :
+           
+            VONDUER : 
+                list ta3 les VONDUER li 3adna and report them  
+            
+            command :
+                list des command avec state ta3hom and alert when the command is older then 7 days
+    
+
+4/28/2024----------------------------------------------
+VONDUER : 
+    yhal compte done 
+    yadih lel page ta3 category(ydirohm admin)
+    ykhyr whda fihom ychof les produit li kynin fel category hadik 
+    each produit has details page ta3o + prix ta3 single prod price and total price in cans he choosed ch3al men whd (cart like)
+    when validat tban 3ndk collecter fel list des command w yabn fel la list ta3 les vendeur   
+
+rah nkhdm cote ta3 VONDUER 
+-fiha regesration done 
+-redirect to category page (create categryo page) done
+-products page done 
+-product detailed page done
+
+--------------------------------------------------------
+4/29/2024----------------------------------------------
+-cart 
+-cart page
+-commands 
+    ida kan collecteur normal :
+        collecter : 
+                list ta3 les collecteuer li 3adna  
+            
+        VONDUER : 
+                list ta3 les VONDUER li 3adna and report them 
+        side_bare :
+           
+            VONDUER : 
+                list ta3 les VONDUER li 3adna and report them  
+            
+            command :
+                list des command avec state ta3hom and alert when the command is older then 7 days
+
+--------------------------------------------------------

@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Products</title>
+    <link rel="stylesheet" href="{% static 'CSS/poubelle.css' %}">
+</head>
+<body>
+    <div class="contaner">
+        <div class="home">
+            <div class="logo">
+                <img src="../my photo/LOGOO.jpg" alt="logo" />
+            </div>
+            <ul>
+                <li>
+                    <a href="home.html">
+                        <span class="icon"><i class="fa-solid fa-desktop"></i></span>
+                        <span>home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="vendeur.html">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span>vendeur</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="command.html">
+                        <span class="icon"><i class="fa-solid fa-box"></i></span>
+                        <span>command</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Login.html">
+                        <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>List of Products in Cart</h1>
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>DZD / KiloGram</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+
+            </tbody>
+        </table>
+        <div style="text-align: center; margin-top: 20px;">
+            <div style="background-color: #f3f3f3; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div id="totalPrice" style="margin-bottom: 20px; font-size: 24px; color: #3B8457; font-weight: bold;"></div>
+                <button onclick="placeOrder()" style="padding: 12px 24px; background-color: #3B8457; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Place Order</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Sample array of products (replace with your actual data)
+        const products = [
+            {% for itm in poubelle_items %}
+            { id: {{itm.id}}, name: '{{itm.product.title}}', price: {{itm.product.price_per_kilo}}, quantity: {{itm.quantity}} },
+            {% endfor %}
+        ];
+
+        // Function to populate the table with products
+        function populateProductTable() {
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            products.forEach(product => {
+                const row = `
+                    <tr>
+                        <td>${product.id}</td>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        <td>
+                            <button onclick="decrementQuantity(${product.id})">-</button>
+                            <span>${product.quantity}</span>
+                            <button onclick="incrementQuantity(${product.id})">+</button>
+                        </td>
+                        <td>${product.price * product.quantity}</td>
+                        <td><button onclick="deleteProduct(${product.id})">Delete</button></td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+            
+            // Calculate and display the total price
+            const totalPriceDiv = document.getElementById('totalPrice');
+            const totalPrice = products.reduce((total, product) => total + (product.price * product.quantity), 0);
+            totalPriceDiv.textContent = `Total Price: $${totalPrice}`;
+        }
+
+        // Function to decrement quantity
+        function decrementQuantity(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product && product.quantity > 1) {
+                product.quantity--;
+                populateProductTable();
+            }
+        }
+
+        // Function to increment quantity
+        function incrementQuantity(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                product.quantity++;
+                populateProductTable();
+            }
+        }
+
+        // Function to delete product
+        function deleteProduct(productId) {
+            const index = products.findIndex(p => p.id === productId);
+            if (index !== -1) {
+                products.splice(index, 1);
+                populateProductTable();
+            }
+        }
+        
+        // Function to place the order (you can modify this as needed)
+        function placeOrder() {
+            // Logic to place the order goes here
+            console.log('Order placed!');
+        }
+
+        // Call the function to populate the table
+        populateProductTable();
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Products</title>
+    <link rel="stylesheet" href="/style.css/table.css">
+</head>
+<body>
+    <div class="contaner">
+        <div class="home">
+            <div class="logo">
+                <img src="../my photo/LOGOO.jpg" alt="logo" />
+            </div>
+            <ul>
+                <li>
+                    <a href="home.html">
+                        <span class="icon"><i class="fa-solid fa-desktop"></i></span>
+                        <span>home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="vendeur.html">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span>vendeur</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="command.html">
+                        <span class="icon"><i class="fa-solid fa-box"></i></span>
+                        <span>command</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Login.html">
+                        <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>List of Products in Cart</h1>
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                <!-- Products will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Sample array of products (replace with your actual data)
+        const products = [
+            { id: 1, name: 'Product 1', price: 10, quantity: 2 },
+            { id: 2, name: 'Product 2', price: 20, quantity: 1 },
+            { id: 3, name: 'Product 3', price: 30, quantity: 3 }
+            // Add more products as needed
+        ];
+
+        // Function to populate the table with products
+        function populateProductTable() {
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            products.forEach(product => {
+                const row = `
+                    <tr>
+                        <td>${product.id}</td>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        <td>
+                            <button onclick="decrementQuantity(${product.id})">-</button>
+                            <span>${product.quantity}</span>
+                            <button onclick="incrementQuantity(${product.id})">+</button>
+                        </td>
+                        <td>${product.price * product.quantity}</td>
+                        <td><button onclick="deleteProduct(${product.id})">Delete</button></td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Function to decrement quantity
+        function decrementQuantity(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product && product.quantity > 1) {
+                product.quantity--;
+                populateProductTable();
+            }
+        }
+
+        // Function to increment quantity
+        function incrementQuantity(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                product.quantity++;
+                populateProductTable();
+            }
+        }
+
+        // Function to delete product
+        function deleteProduct(productId) {
+            const index = products.findIndex(p => p.id === productId);
+            if (index !== -1) {
+                products.splice(index, 1);
+                populateProductTable();
+            }
+        }
+
+        // Call the function to populate the table
+        populateProductTable();
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+/* table.css */
+
+.content {
+  margin-left: 276px;
+  margin-top: 2px;
+}
+
+.content h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  color: #f3b73e;
+}
+
+.content table {
+  border-collapse: collapse;
+  width: 98%;
+  text-align: center;
+  margin-left: 9px;
+}
+
+table thead {
+  font-weight: bold;
+  background-color: #83ac92; /* Update background color */
+  color: #fff;
+}
+
+table td {
+  border: 1px solid #ddd; /* Update border color */
+  background-color: #8080803b;
+  height: 60px;
+  padding: 4px 15px;
+}
+
+/* style.css */
+
+:root {
+  --main-color: #3B8457;
+}
+
+* {
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  background: #3B8457;
+}
+
+.contaner .home {
+  background: #000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 265px;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.contaner .home .logo {
+  margin: 47px 0 50px;
+  text-align: center;
+}
+
+.contaner .home .logo img {
+  display: block;
+  width: 230px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.contaner .home ul li a {
+  display: block;
+  padding: 20px 30px;
+  border-bottom: 1px solid #f3b73e;
+  color: white;
+  font-size: 16px;
+  position: relative;
+}
+
+.contaner .home ul li a .icon {
+  width: 30px;
+  display: inline-block;
+}
+
+.contaner .home ul li a:hover {
+  color: black;
+  background: #3B8457;
+  border-right: 2px solid #3B8457;
+}
+
+.contaner .home ul li a:hover .icon {
+  color: black;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 30px;
+  background: #f3b73e;
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  width: 200px;
+}
+
+.stat-box h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+  border: none;
+  background-color: #a08736;
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2E6F48;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #83ac92;
+  color: #fff;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+tbody tr:hover {
+  background-color: #f3f3f3;
+}
