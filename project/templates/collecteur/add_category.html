@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/form.css' %}">
+
+    <style>
+      .stat-box {
+        text-align: center;
+        margin-bottom: 20px;
+        margin: 20px auto;
+        padding: 47px;
+        width: 500px;
+      }
+      .stat-number {
+      font-size: 16px;
+      font-weight: normal;
+}
+    </style>
+</head>
+<body>
+  <div class="contaner">
+    <div class="home2">
+      <div class="logo">
+        <img src="../my photo/LOGOO.jpg" alt="logo" />
+      </div>
+      <ul>
+        <li>
+          <a href="{% url 'collecteur:home' %}" >
+            <span>dashbord</span>
+          </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:AllCategories' %}" >
+              <span>categories</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:products' %}" >
+              <span>products</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:collecteurs' %}" >
+              <span>collecteur</span>
+            </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:vendeurs' %}" >
+            <span>vendeur</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:commandes' %}" >
+            <span>command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:history_commandes' %}" >
+            <span>historique des command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'users:logout' %}">
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="form-container">
+    <form class="dashboard-form" style="width: 600px;" action="" method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>ajoute de category</h2>
+        
+        <div class="stat-box">
+              <h3>Image</h3>
+              <p class="stat-number">{{ form.banner }}</p>
+        </div>
+        
+        <div class="stat-box">
+            <h3>Titre</h3>
+            <p class="stat-number">{{ form.title }}</p>
+        </div>
+    
+
+        <div style="text-align: center; ">
+
+          <button type="submit" style="padding: 10px; outline: none;">Submit</button>
+        </div>
+    </form>
+  </div>
+</body>
+</html>

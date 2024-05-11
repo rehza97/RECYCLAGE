@@ -13,41 +13,36 @@
 <div class="container">
     <div class="home">
         <div class="logo">
-            <img src="../my photo/LOGOO.jpg" alt="logo" />
+          <img src="../my photo/LOGOO.jpg" alt="logo" />
         </div>
         <ul>
-            <li>
-                <a href="home.html" >
-                    <span class="icon"><i class="fa-solid fa-desktop"></i></span>
-                    <span>home</span>
-                </a>
-            </li>
-            <li>
-                <a href="vendeur.html" >
-                    <span class="icon"><i class="fas fa-user-friends"></i></span>
-                    <span>all products</span>
-                </a>
-            </li>
-            <li>
-                <a href="vendeur.html" >
-                    <span class="icon"><i class="fas fa-user-friends"></i></span>
-                    <span>categories</span>
-                </a>
-            </li>
-            <li>
-                <a href="command.html" >
-                    <span class="icon"><i class="fa-solid fa-box"></i></span>
-                    <span>poubelle</span>
-                </a>
-            </li>
-            <li>
-                <a href="Login.html">
-                    <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
-                    <span>Logout</span>
-                </a>
-            </li>
+
+          <li>
+            <a href="{% url 'vendeur:categories' %}" >
+              <span class="icon"><i class="fas fa-user-friends"></i></span>
+              <span>categories</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'vendeur:poubelle' %}" >
+              <span class="icon"><i class="fa-solid fa-box"></i></span>
+              <span>poubelle</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'vendeur:poubelle' %}" >
+              <span class="icon"><i class="fa-solid fa-box"></i></span>
+              <span>mes commandes</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'users:logout' %}">
+              <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+              <span>Logout</span>
+            </a>
+          </li>
         </ul>
-    </div>
+      </div>
 
     <div class="product-details">
         <div class="product-image">
@@ -57,40 +52,51 @@
             <h2>{{product.title}}</h2>
             <p>Price: {{product.price_per_kilo}} DZD/Kg</p>
             <p>type: {{product.type}}</p>
-            <div class="amount-selector">
-                <button onclick="decreaseAmount()">-</button>
-                <input type="text" id="amount" value="1">
-                <button onclick="increaseAmount()">+</button>
-            </div>
             <p>Description: {{product.desc}}</p>
             <p>Category: {{product.category}}</p>
-            <button onclick="addToCart()"> <a class="btn" href="{% url 'vendeur:add_poubelle' product.id %}">Add to cart</a
-                Add to Cart
-            </a></button>
+            <form action="{% url 'vendeur:add' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <div class="amount-selector">
+                    <button type="button" onclick="decreaseAmount()">-</button>
+                    <input type="number" id="amount" name="quantity" value="1">
+                    <button type="button" onclick="increaseAmount()">+</button>
+                </div>
+                <p>total price: <span id="price"> {{product.price_per_kilo}} </span>DZD</p>
+                <button type="submit">Ajouter au panier</button>
+            </form>
+
            
         </div>
     </div>
 </div>
 
 <script>
+    
     function increaseAmount() {
-        var amountInput = document.getElementById("amount");
-        var currentAmount = parseInt(amountInput.value);
-        amountInput.value = currentAmount + 1;
-    }
+    var amountInput = document.getElementById("amount");
+    var currentAmount = parseInt(amountInput.value);
+    amountInput.value = currentAmount + 1;
+    updateTotalPrice();
+}
 
-    function decreaseAmount() {
-        var amountInput = document.getElementById("amount");
-        var currentAmount = parseInt(amountInput.value);
-        if (currentAmount > 1) {
-            amountInput.value = currentAmount - 1;
-        }
+function decreaseAmount() {
+    var amountInput = document.getElementById("amount");
+    var currentAmount = parseInt(amountInput.value);
+    if (currentAmount > 1) {
+        amountInput.value = currentAmount - 1;
+        updateTotalPrice();
     }
+}
 
-    function addToCart() {
-        var selectedAmount = document.getElementById("amount").value;
-        alert("Added " + selectedAmount + " items to the cart!");
-    }
+function updateTotalPrice() {
+    var amountInput = document.getElementById("amount");
+    var quantity = parseInt(amountInput.value);
+    var pricePerKilo = parseFloat("{{ product.price_per_kilo }}");
+    var totalPrice = quantity * pricePerKilo;
+    document.getElementById('price').innerHTML = totalPrice.toFixed(2);
+}
+
 </script>
 
 </body>

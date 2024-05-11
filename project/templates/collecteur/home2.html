@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
+
+
+</head>
+<body>
+  <div class="contaner">
+    <div class="home2">
+      <div class="logo">
+        <img src="../my photo/LOGOO.jpg" alt="logo" />
+      </div>
+      <ul>
+        <li>
+          <a href="{% url 'collecteur:home' %}" >
+            <span>dashbord</span>
+          </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:AllCategories' %}" >
+              <span>categories</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:products' %}" >
+              <span>products</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:collecteurs' %}" >
+              <span>collecteur</span>
+            </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:vendeurs' %}" >
+            <span>vendeur</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:commandes' %}" >
+            <span>command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:history_commandes' %}" >
+            <span>historique des command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'users:logout' %}">
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+      <div class="dashboard">
+        <div class="stat-box">
+            <h2>vendeurs</h2>
+
+            <p class="stat-number">{{vendeurs}} </p>
+        </div>
+        <div class="stat-box">
+            <h2>commands</h2>
+            <p class="stat-number">{{commandes}} </p>
+
+        </div>
+    
+   
+      <div class="stat-box">
+          <h2>collecteur</h2>
+          <p class="stat-number">{{collecteurs}} </p>
+        </div>
+    </div>
+     
+ 
+     
+</body>
+</html>

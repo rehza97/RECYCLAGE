@@ -11,43 +11,38 @@
 <body>
 
   <div class="container">
-      <div class="home">
-        <div class="logo">
-          <img src="../my photo/LOGOO.jpg" alt="logo" />
-        </div>
-        <ul>
-          <li>
-            <a href="home.html" >
-              <span class="icon"><i class="fa-solid fa-desktop"></i></span>
-              <span>home</span>
-            </a>
-          </li>
-          <li>
-            <a href="vendeur.html" >
-              <span class="icon"><i class="fas fa-user-friends"></i></span>
-              <span>all products</span>
-            </a>
-          </li>
-          <li>
-            <a href="vendeur.html" >
-              <span class="icon"><i class="fas fa-user-friends"></i></span>
-              <span>categories</span>
-            </a>
-          </li>
-          <li>
-            <a href="command.html" >
-              <span class="icon"><i class="fa-solid fa-box"></i></span>
-              <span>poubelle</span>
-            </a>
-          </li>
-          <li>
-            <a href="Login.html">
-              <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
-              <span>Logout</span>
-            </a>
-          </li>
-        </ul>
+    <div class="home">
+      <div class="logo">
+        <img src="../my photo/LOGOO.jpg" alt="logo" />
       </div>
+      <ul>
+
+        <li>
+          <a href="{% url 'vendeur:categories' %}" >
+            <span class="icon"><i class="fas fa-user-friends"></i></span>
+            <span>categories</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'vendeur:poubelle' %}" >
+            <span class="icon"><i class="fa-solid fa-box"></i></span>
+            <span>poubelle</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'vendeur:poubelle' %}" >
+            <span class="icon"><i class="fa-solid fa-box"></i></span>
+            <span>mes commandes</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'users:logout' %}">
+            <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
     </div>
     <div class="dashboard">
       {% for product in products %}

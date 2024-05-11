@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignUp</title>
+    <title>add collecteur</title>
     <link rel="stylesheet" href="{% static 'CSS/SignUp.css' %}">
 </head>
 <body>
@@ -13,7 +13,7 @@
         <div class="logo">
             <img src="{% static 'img/LOGOO.jpg' %}" alt="logo" />
         </div>
-        <h1>Create compte de venduer</h1>
+        <h1>ajoute un collectuer</h1>
         {% csrf_token %}
 
         {% render_field form.last_name  placeholder='first name' required=true %}
@@ -25,7 +25,7 @@
         {% render_field form.phone  placeholder='phone number' required=true %}
         {% render_field form.address  placeholder='address' required=true %}
         {% render_field form.gender  placeholder='gender' required=true %}
-        <input type="submit" value="inscrire">
+        <input type="submit" value="ajoute">
     </form>
 </body>
 </html>

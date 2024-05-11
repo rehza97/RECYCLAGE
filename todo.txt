@@ -61,7 +61,7 @@ ROAD :
             
             command :
                 list des command avec state ta3hom and alert when the command is older then 7 days
-    
+        
     ida kan collecteur normal :
         collecter : 
                 list ta3 les collecteuer li 3adna  
@@ -111,3 +111,7 @@ rah nkhdm cote ta3 VONDUER
                 list des command avec state ta3hom and alert when the command is older then 7 days
 
 --------------------------------------------------------
+
+
+
+

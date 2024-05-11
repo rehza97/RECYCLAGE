@@ -4,6 +4,7 @@ from django.utils.text import slugify
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
+    banner = models.ImageField(upload_to='banner/cartegory', blank=True, null=True)
     slug = models.SlugField(unique=True,blank=True,null=True)  # Add a SlugField for the title slug
 
     def __str__(self):
@@ -22,7 +23,6 @@ class Product(models.Model):
     type = models.CharField(max_length=256)
     weight = models.DecimalField(max_digits=10, decimal_places=2)
     price_per_kilo = models.DecimalField(max_digits=10, decimal_places=2)
-    totalPrice = models.DecimalField(max_digits=10, decimal_places=2,blank=True , null=True)
     desc = models.TextField()
     
     

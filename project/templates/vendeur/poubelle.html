@@ -12,35 +12,36 @@
     <div class="contaner">
         <div class="home">
             <div class="logo">
-                <img src="../my photo/LOGOO.jpg" alt="logo" />
+              <img src="../my photo/LOGOO.jpg" alt="logo" />
             </div>
             <ul>
-                <li>
-                    <a href="home.html">
-                        <span class="icon"><i class="fa-solid fa-desktop"></i></span>
-                        <span>home</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="vendeur.html">
-                        <span class="icon"><i class="fas fa-user-friends"></i></span>
-                        <span>vendeur</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="command.html">
-                        <span class="icon"><i class="fa-solid fa-box"></i></span>
-                        <span>command</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="Login.html">
-                        <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
-                        <span>Logout</span>
-                    </a>
-                </li>
+    
+              <li>
+                <a href="{% url 'vendeur:categories' %}" >
+                  <span class="icon"><i class="fas fa-user-friends"></i></span>
+                  <span>categories</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'vendeur:poubelle' %}" >
+                  <span class="icon"><i class="fa-solid fa-box"></i></span>
+                  <span>poubelle</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'vendeur:poubelle' %}" >
+                  <span class="icon"><i class="fa-solid fa-box"></i></span>
+                  <span>mes commandes</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'users:logout' %}">
+                  <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                  <span>Logout</span>
+                </a>
+              </li>
             </ul>
-        </div>
+          </div>
     </div>
 
     <div class="content">
@@ -57,89 +58,48 @@
                 </tr>
             </thead>
             <tbody id="productTableBody">
-
+                {% for item in poubelle %}
+                <tr>
+                    <td> {{ item.produit.id }}</td>
+                    <td>{{ item.produit.title }}</td>
+                    <td>{{ item.produit.price_per_kilo }}</td>
+                    <td> 
+                        <span>{{ item.quantity }}</span>
+                    </td>
+                    <td id="price">{{item.price}} DZD</td>
+                    <td>
+                        <form  action="{% url 'vendeur:delete_from_poubelle' item.id %}" method="POST">
+                            {% csrf_token %}
+                            <button >Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                  
+                {% endfor %}
             </tbody>
         </table>
         <div style="text-align: center; margin-top: 20px;">
             <div style="background-color: #f3f3f3; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                 <div id="totalPrice" style="margin-bottom: 20px; font-size: 24px; color: #3B8457; font-weight: bold;"></div>
-                <button onclick="placeOrder()" style="padding: 12px 24px; background-color: #3B8457; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Place Order</button>
+                
+                <a href="{% url 'vendeur:sendCommand' %}" style="padding: 12px 24px; background-color: #3B8457; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Place Order</a>
+            
             </div>
         </div>
+
     </div>
     
     <script>
         // Sample array of products (replace with your actual data)
-        const products = [
-            {% for itm in poubelle_items %}
-            { id: {{itm.id}}, name: '{{itm.product.title}}', price: {{itm.product.price_per_kilo}}, quantity: {{itm.quantity}} },
-            {% endfor %}
-        ];
-
-        // Function to populate the table with products
-        function populateProductTable() {
-            const tableBody = document.getElementById('productTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
-
-            products.forEach(product => {
-                const row = `
-                    <tr>
-                        <td>${product.id}</td>
-                        <td>${product.name}</td>
-                        <td>${product.price}</td>
-                        <td>
-                            <button onclick="decrementQuantity(${product.id})">-</button>
-                            <span>${product.quantity}</span>
-                            <button onclick="incrementQuantity(${product.id})">+</button>
-                        </td>
-                        <td>${product.price * product.quantity}</td>
-                        <td><button onclick="deleteProduct(${product.id})">Delete</button></td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-            
-            // Calculate and display the total price
-            const totalPriceDiv = document.getElementById('totalPrice');
-            const totalPrice = products.reduce((total, product) => total + (product.price * product.quantity), 0);
-            totalPriceDiv.textContent = `Total Price: $${totalPrice}`;
+        price = document.querySelectorAll('#price')
+        total = 0
+        for (let index = 0; index < price.length; index++) {
+            const element = price[index];
+            total +=  Number(element.innerHTML.split(' ')[0])
         }
+        document.getElementById("totalPrice").innerHTML= "Total : "+total+' DZD'
 
-        // Function to decrement quantity
-        function decrementQuantity(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product && product.quantity > 1) {
-                product.quantity--;
-                populateProductTable();
-            }
-        }
 
-        // Function to increment quantity
-        function incrementQuantity(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                product.quantity++;
-                populateProductTable();
-            }
-        }
-
-        // Function to delete product
-        function deleteProduct(productId) {
-            const index = products.findIndex(p => p.id === productId);
-            if (index !== -1) {
-                products.splice(index, 1);
-                populateProductTable();
-            }
-        }
-        
-        // Function to place the order (you can modify this as needed)
-        function placeOrder() {
-            // Logic to place the order goes here
-            console.log('Order placed!');
-        }
-
-        // Call the function to populate the table
-        populateProductTable();
     </script>
 </body>
 </html>

@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/table.css' %}">
+
+</head>
+<body>
+  <div class="contaner">
+    <div class="home2">
+      <div class="logo">
+        <img src="../my photo/LOGOO.jpg" alt="logo" />
+      </div>
+      <ul>
+        <li>
+          <a href="{% url 'collecteur:home' %}" >
+            <span>dashbord</span>
+          </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:AllCategories' %}" >
+              <span>categories</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:products' %}" >
+              <span>products</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:collecteurs' %}" >
+              <span>collecteur</span>
+            </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:vendeurs' %}" >
+            <span>vendeur</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:commandes' %}" >
+            <span>command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:history_commandes' %}" >
+            <span>historique des command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'users:logout' %}">
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+    <div class="content">
+        <h1>List des categories</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>category ID</th>
+                    <th>category Name</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td>---------</td>
+                  <td>---------</td>
+
+                  <td>
+                    <a href="{% url 'collecteur:addcategory' %}">ajoute</a> 
+                  </td>
+              </tr>
+              {% for cate in category %}
+                
+                <tr>
+                    <td>{{cate.id}}</td>
+                    <td>{{cate.title}}</td>
+
+                    <td>
+                      <a href="{% url 'collecteur:updatecategory' cate.id %}">update</a> 
+                      <a href="{% url 'collecteur:deletecategory' cate.id %}">delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+ 
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

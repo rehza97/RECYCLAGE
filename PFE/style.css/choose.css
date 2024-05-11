@@ -10,7 +10,7 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    /* width: 300px; */
+    width: 300px;
     padding: 80px;
     background: #191919;
     text-align: center;
