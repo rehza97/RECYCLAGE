@@ -1,103 +1,380 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details</title>
+{% block title %}
+  {{product.title}}
+{% endblock title %}
+{% block content %}
+<style class="cp-pen-styles">
+
     
-    <link rel="stylesheet" href="{% static 'CSS/details.css' %}">
-</head>
-<body>
-
-<div class="container">
-    <div class="home">
-        <div class="logo">
-          <img src="../my photo/LOGOO.jpg" alt="logo" />
-        </div>
-        <ul>
-
-          <li>
-            <a href="{% url 'vendeur:categories' %}" >
-              <span class="icon"><i class="fas fa-user-friends"></i></span>
-              <span>categories</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'vendeur:poubelle' %}" >
-              <span class="icon"><i class="fa-solid fa-box"></i></span>
-              <span>poubelle</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'vendeur:poubelle' %}" >
-              <span class="icon"><i class="fa-solid fa-box"></i></span>
-              <span>mes commandes</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'users:logout' %}">
-              <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
-              <span>Logout</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-    <div class="product-details">
-        <div class="product-image">
-            <img src="{{product.image.url}}" alt="Product 1">
-        </div>
-        <div class="product-info">
-            <h2>{{product.title}}</h2>
-            <p>Price: {{product.price_per_kilo}} DZD/Kg</p>
-            <p>type: {{product.type}}</p>
-            <p>Description: {{product.desc}}</p>
-            <p>Category: {{product.category}}</p>
-            <form action="{% url 'vendeur:add' product.id %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="product_id" value="{{ product.id }}">
-                <div class="amount-selector">
-                    <button type="button" onclick="decreaseAmount()">-</button>
-                    <input type="number" id="amount" name="quantity" value="1">
-                    <button type="button" onclick="increaseAmount()">+</button>
-                </div>
-                <p>total price: <span id="price"> {{product.price_per_kilo}} </span>DZD</p>
-                <button type="submit">Ajouter au panier</button>
-            </form>
-
-           
-        </div>
-    </div>
-</div>
-
-<script>
-    
-    function increaseAmount() {
-    var amountInput = document.getElementById("amount");
-    var currentAmount = parseInt(amountInput.value);
-    amountInput.value = currentAmount + 1;
-    updateTotalPrice();
-}
-
-function decreaseAmount() {
-    var amountInput = document.getElementById("amount");
-    var currentAmount = parseInt(amountInput.value);
-    if (currentAmount > 1) {
-        amountInput.value = currentAmount - 1;
-        updateTotalPrice();
+    .ctrl {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      border-bottom: 1px solid #D5DCE6;
+      background-color: #fff;
+      border-radius: 5px;
+      font-size: 30px;
     }
-}
+    
+    .ctrl__counter {
+      position: relative;
+      width: 50px;
+      height: 100px;
+      color: #333C48;
+      text-align: center;
+      overflow: hidden;
+    }
+    
+    .ctrl__counter.is-input .ctrl__counter-num {
+      visability: hidden;
+      opacity: 0;
+      -webkit-transition: opacity 100ms ease-in;
+      transition: opacity 100ms ease-in;
+    }
+    
+    .ctrl__counter.is-input .ctrl__counter-input {
+      visability: visible;
+      opacity: 1;
+      -webkit-transition: opacity 100ms ease-in;
+      transition: opacity 100ms ease-in;
+    }
+    
+    .ctrl__counter-input {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      z-index: 2;
+      box-shadow: none;
+      outline: none;
+      border: none;
+      color: #333C48;
+      font-size: 30px;
+      line-height: 100px;
+      text-align: center;
+      visability: hidden;
+      opacity: 0;
+      -webkit-transition: opacity 100ms ease-in;
+      transition: opacity 100ms ease-in;
+    }
+    
+    .ctrl__counter-num {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      line-height: 100px;
+      visability: visible;
+      opacity: 1;
+      -webkit-transition: opacity 100ms ease-in;
+      transition: opacity 100ms ease-in;
+    }
+    
+    .ctrl__counter-num.is-increment-hide {
+      opacity: 0;
+      -webkit-transform: translateY(-50px);
+      transform: translateY(-50px);
+      -webkit-animation: increment-prev 100ms ease-in;
+      animation: increment-prev 100ms ease-in;
+    }
+    
+    .ctrl__counter-num.is-increment-visible {
+      opacity: 1;
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      -webkit-animation: increment-next 100ms ease-out;
+      animation: increment-next 100ms ease-out;
+    }
+    
+    .ctrl__counter-num.is-decrement-hide {
+      opacity: 0;
+      -webkit-transform: translateY(50px);
+      transform: translateY(50px);
+      -webkit-animation: decrement-prev 100ms ease-in;
+      animation: decrement-prev 100ms ease-in;
+    }
+    
+    .ctrl__counter-num.is-decrement-visible {
+      opacity: 1;
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      -webkit-animation: decrement-next 100ms ease-out;
+      animation: decrement-next 100ms ease-out;
+    }
+    
+    .ctrl__button {
+      width: 50px;
+      line-height: 50px;
+      text-align: center;
+      color: #fff;
+      cursor: pointer;
+      background-color: #8498a7;
+      -webkit-transition: background-color 100ms ease-in;
+      transition: background-color 100ms ease-in;
+    }
+    
+    .ctrl__button:hover {
+      background-color: #90a2b0;
+      -webkit-transition: background-color 100ms ease-in;
+      transition: background-color 100ms ease-in;
+    }
+    
+    .ctrl__button:active {
+      background-color: #778996;
+      -webkit-transition: background-color 100ms ease-in;
+      transition: background-color 100ms ease-in;
+    }
+    
+    .ctrl__button--decrement { border-radius: 5px 0 0 5px; }
+    
+    .ctrl__button--increment { border-radius: 0 5px 5px 0; }
+     @-webkit-keyframes 
+    decrement-prev {  from {
+     opacity: 1;
+     -webkit-transform: translateY(0);
+     transform: translateY(0);
+    }
+    }
+     @keyframes 
+    decrement-prev {  from {
+     opacity: 1;
+     -webkit-transform: translateY(0);
+     transform: translateY(0);
+    }
+    }
+    @-webkit-keyframes 
+    decrement-next {  from {
+     opacity: 0;
+     -webkit-transform: translateY(-50px);
+     transform: translateY(-50px);
+    }
+    }
+    @keyframes 
+    decrement-next {  from {
+     opacity: 0;
+     -webkit-transform: translateY(-50px);
+     transform: translateY(-50px);
+    }
+    }
+    @-webkit-keyframes 
+    increment-prev {  from {
+     opacity: 1;
+     -webkit-transform: translateY(0);
+     transform: translateY(0);
+    }
+    }
+    @keyframes 
+    increment-prev {  from {
+     opacity: 1;
+     -webkit-transform: translateY(0);
+     transform: translateY(0);
+    }
+    }
+    @-webkit-keyframes 
+    increment-next {  from {
+     opacity: 0;
+     -webkit-transform: translateY(50px);
+     transform: translateY(50px);
+    }
+    }
+    @keyframes 
+    increment-next {  from {
+     opacity: 0;
+     -webkit-transform: translateY(50px);
+     transform: translateY(50px);
+    }
+    }
+    </style>
 
-function updateTotalPrice() {
-    var amountInput = document.getElementById("amount");
-    var quantity = parseInt(amountInput.value);
-    var pricePerKilo = parseFloat("{{ product.price_per_kilo }}");
-    var totalPrice = quantity * pricePerKilo;
-    document.getElementById('price').innerHTML = totalPrice.toFixed(2);
-}
+          <div class="page-header">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="page-title">Product Details</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="teachers.html">Products</a>
+                  </li>
+                  <li class="breadcrumb-item active">product Details</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="about-info">
+                    <h4>About {{product.title}}</h4>
+                    <div class="media mt-3">
+                        {% if product.image.url %}
+                        <img src="{{product.image.url}}" class="mr-3" alt="..." />
+                        {% else %}
+                        <img src="{% static "img/No_Image_Available.jpg" %}" class="mr-3" alt="..." />
+                        {% endif %}
+                      <div class="media-body">
+                        <ul>
+                          <li>
+                            <span class="title-span">Name : </span>
+                            <span class="info-span">{{product.title}}</span>
+                          </li>
+                          <li>
+                            <span class="title-span">Type : </span>
+                            <span class="info-span">{{product.type}}</span>
+                          </li>
+                          <li>
+                            <span class="title-span">Price : </span>
+                            <span class="info-span">{{product.price_per_kilo}} DZD/Kg</span>
+                          </li>
+                          <li>
+                            <span class="title-span">Category : </span>
+                            <span class="info-span">{{product.category}} </span
+                            >
+                          </li>
+                          <li>
+                            <span class="title-span">Gender : </span>
+                            <span class="info-span">
+                                <form action="{% url 'vendeur:add' product.id %}" method="POST">
+                                    {% csrf_token %}
+                                <div class='ctrl'>
+                                    <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>
+                                    <div class='ctrl__counter'>
+                                      <input class='ctrl__counter-input' maxlength='10' type='text' value='0' name="quantity">
+                                      <div class='ctrl__counter-num'>0</div>
+                                    </div>
+                                    <div class='ctrl__button ctrl__button--increment'>+</div>
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">
+                                    Ajouter au panier
+                                  </button>
+                                </form>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col-md-12">
+                        <p>
+                          {{product.desc}}
+                        </p>
+                      </div>
+                    </div>
 
-</script>
+                  </div>
+                </div>
+              </div>
 
-</body>
-</html>
+            </div>
+          </div>
+
+
+
+          <script>
+            (function() {
+              'use strict';
+            
+              function ctrls() {
+                var _this = this;
+            
+                this.counter = 0;
+                this.els = {
+                  decrement: document.querySelector('.ctrl__button--decrement'),
+                  counter: {
+                    container: document.querySelector('.ctrl__counter'),
+                    num: document.querySelector('.ctrl__counter-num'),
+                    input: document.querySelector('.ctrl__counter-input')
+                  },
+                  increment: document.querySelector('.ctrl__button--increment')
+                };
+            
+                this.decrement = function() {
+                  var counter = _this.getCounter();
+                  var nextCounter = (_this.counter > 0) ? --counter : counter;
+                  _this.setCounter(nextCounter);
+                };
+            
+                this.increment = function() {
+                  var counter = _this.getCounter();
+                  var nextCounter = (counter < 9999999999) ? ++counter : counter;
+                  _this.setCounter(nextCounter);
+                };
+            
+                this.getCounter = function() {
+                  return _this.counter;
+                };
+            
+                this.setCounter = function(nextCounter) {
+                  _this.counter = nextCounter;
+                };
+            
+                this.debounce = function(callback) {
+                  setTimeout(callback, 100);
+                };
+            
+                this.render = function(hideClassName, visibleClassName) {
+                  _this.els.counter.num.classList.add(hideClassName);
+            
+                  setTimeout(function() {
+                    _this.els.counter.num.innerText = _this.getCounter();
+                    _this.els.counter.input.value = _this.getCounter();
+                    _this.els.counter.num.classList.add(visibleClassName);
+                  }, 100);
+            
+                  setTimeout(function() {
+                    _this.els.counter.num.classList.remove(hideClassName);
+                    _this.els.counter.num.classList.remove(visibleClassName);
+                  }, 200);
+                };
+            
+                this.ready = function() {
+                  _this.els.decrement.addEventListener('click', function() {
+                    _this.debounce(function() {
+                      _this.decrement();
+                      _this.render('is-decrement-hide', 'is-decrement-visible');
+                    });
+                  });
+            
+                  _this.els.increment.addEventListener('click', function() {
+                    _this.debounce(function() {
+                      _this.increment();
+                      _this.render('is-increment-hide', 'is-increment-visible');
+                    });
+                  });
+            
+                  _this.els.counter.input.addEventListener('input', function(e) {
+                    var parseValue = parseInt(e.target.value);
+                    if (!isNaN(parseValue) && parseValue >= 0) {
+                      _this.setCounter(parseValue);
+                      _this.render();
+                    }
+                  });
+            
+                  _this.els.counter.input.addEventListener('focus', function(e) {
+                    _this.els.counter.container.classList.add('is-input');
+                  });
+            
+                  _this.els.counter.input.addEventListener('blur', function(e) {
+                    _this.els.counter.container.classList.remove('is-input');
+                    _this.render();
+                  });
+                };
+              };
+            
+              // init
+              var controls = new ctrls();
+              document.addEventListener('DOMContentLoaded', controls.ready);
+            })();
+            </script>
+          {% endblock content %}

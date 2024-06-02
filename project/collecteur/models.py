@@ -19,7 +19,7 @@ class Category(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=256)
     image = models.ImageField(upload_to='products/')
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     type = models.CharField(max_length=256)
     weight = models.DecimalField(max_digits=10, decimal_places=2)
     price_per_kilo = models.DecimalField(max_digits=10, decimal_places=2)

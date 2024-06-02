@@ -50,6 +50,7 @@ def add(request, id):
     if request.method == "POST":
         product = Product.objects.get(id=id)
         quantity = int(request.POST['quantity'])  # Convert quantity to an integer
+        print(quantity)
         price = Decimal(quantity) * product.price_per_kilo  # Calculate total price
         
         # Get or create AllCommandes object for the current user

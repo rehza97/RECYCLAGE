@@ -10,15 +10,25 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="users:login")
 def home(request):
-    vendeurs = User.objects.filter(vendeur=True).count()
-    collecteur = User.objects.filter(collecteur=True).count()
-    commandes = AllCommandes.objects.filter(placed=True).count()
+    vendeurs = User.objects.filter(vendeur=True).order_by('-pk')[:5]
+    collecteurs = User.objects.filter(collecteur=True).order_by('-pk')[:5]
+    commandes_on_hold = AllCommandes.objects.filter(placed=True).order_by('-pk')[:5]
+    commandes_collected = AllCommandes.objects.filter(delivered=True).order_by('-pk')[:5]
+    vendeurs_count = User.objects.filter(vendeur=True).count()
+    collecteur_count = User.objects.filter(collecteur=True).count()
+    commandes_palced_count = AllCommandes.objects.filter(placed=True).count()
+    commandes_collected_count = AllCommandes.objects.filter(delivered=True).count()
     context = {
-        'commandes': commandes,
+        'commandes': commandes_on_hold,
+        'commandes_collected': commandes_collected,
         'vendeurs': vendeurs,
-        'collecteurs': collecteur
+        'collecteurs': collecteurs,
+        'commandes_count': commandes_palced_count,
+        'vendeurs_count': vendeurs_count,
+        'collecteurs_count': collecteur_count,
+        'commandes_collected_count': commandes_collected_count,
     }
-    return render(request, 'collecteur/home2.html', context)
+    return render(request, 'collecteur/home.html', context)
 
 @login_required(login_url="users:login")
 def collecteurs(request):

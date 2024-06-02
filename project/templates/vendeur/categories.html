@@ -1,88 +1,46 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
-  
-    <link rel="stylesheet" href="{% static 'CSS/products.css' %}">
-</head>
-<body>
-
-  <div class="container">
-      <div class="home">
-        <div class="logo">
-          <img src="../my photo/LOGOO.jpg" alt="logo" />
-        </div>
-        <ul>
-
-          <li>
-            <a href="{% url 'vendeur:categories' %}" >
-              <span class="icon"><i class="fas fa-user-friends"></i></span>
-              <span>categories</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'vendeur:poubelle' %}" >
-              <span class="icon"><i class="fa-solid fa-box"></i></span>
-              <span>poubelle</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'vendeur:poubelle' %}" >
-              <span class="icon"><i class="fa-solid fa-box"></i></span>
-              <span>mes commandes</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'users:logout' %}">
-              <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
-              <span>Logout</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %} categories {% endblock title %} 
+{% block content %}
+<div class="comp-sec-wrapper">
+  <section class="comp-section comp-cards">
+    <div class="section-header">
+      <h4 class="section-title">Categories</h4>
+      <div class="line"></div>
     </div>
-    <div class="dashboard">
-    {% for category in all_categories %}
-      
-    {% comment %} <aclass="category-card">
-      <h3>{{category.title}}</h3>
+    <div class="row">
+      {% for category in all_categories %}
+      <div class="col-12 col-md-6 col-lg-4 d-flex">
+        <div class="card flex-fill">
+          {% if category.banner %}
+          <img
+            alt="Card Image"
+            src="{{category.banner.url}}"
+            class="card-img-top"
+          />
 
-    </a>
-    <a  href="{% url 'vendeur:products' category.slug   %}"  class="product-card">
-      <div class="product-image">
+          {% else %}
+          <img
+            alt="Card Image"
+            src="{% static 'img/No_Image_Available.jpg' %}"
+            class="card-img-top"
+          />
 
-      </div>
-      <h3>{{product.title}}</h3>
-      <div class="product-info">
-          <p>Weight: {{product.weight}} kg</p>
-          <p>Amount: {{product.price_per_kilo}}</p>
-          <p>Price: <br> {{product.price_per_kilo}} DZD/kg</p>
+          {% endif %}
+          <div class="card-header">
+            <h5 class="card-title mb-0">{{category.title}}</h5>
+          </div>
+          <div class="card-body">
+            <a
+              class="btn btn-primary"
+              href="{% url 'vendeur:products' category.slug   %}"
+              >details</a
+            >
+          </div>
         </div>
-        <a href="{% url 'vendeur:products' category.slug   %}" class="details-btn">Details</a>
-  </a> {% endcomment %}
-
-
-  <a href="{% url 'vendeur:products' category.slug   %}" class="product-card">
-    <div class="product-image">
-      {% if category.banner %}
-      <img src="{{category.banner.url}}" alt="{{category.banner.url}}">
-      
-      {% else %}
-      <img src="{% static "img/No_Image_Available.jpg" %}" alt="">
-      {% endif %}
+      </div>
+      {% endfor %}
     </div>
-    <h3>{{category.title}}</h3>
-
-
-</a>
-    
-    {% endfor %}
-     
-      <!-- Add more category cards here -->
-    </div> 
-  
-</body>
-</html>
+  </section>
+</div>
+{% endblock content %}

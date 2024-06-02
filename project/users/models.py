@@ -20,7 +20,7 @@ class User(AbstractUser):
     user_type = models.CharField(max_length=100, choices=typeOfUser,blank = True , null = True)
     vendeur = models.BooleanField(default=False) 
     collecteur = models.BooleanField(default=False) 
-    
+    pic = models.ImageField(upload_to='profile/',null=True,blank=True)
     def __str__(self) -> str:
         return self.email
     

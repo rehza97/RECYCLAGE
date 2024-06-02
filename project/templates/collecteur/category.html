@@ -1,100 +1,79 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    
-    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
-    <link rel="stylesheet" href="{% static 'CSS/table.css' %}">
+{% extends "base.html" %}
 
-</head>
-<body>
-  <div class="contaner">
-    <div class="home2">
-      <div class="logo">
-        <img src="../my photo/LOGOO.jpg" alt="logo" />
-      </div>
-      <ul>
-        <li>
-          <a href="{% url 'collecteur:home' %}" >
-            <span>dashbord</span>
-          </a>
+{% block title %}
+  Categories
+{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Categories</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'collecteur:home' %}">Dashboard</a>
         </li>
-        <li>
-            <a href="{% url 'collecteur:AllCategories' %}" >
-              <span>categories</span>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'collecteur:products' %}" >
-              <span>products</span>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'collecteur:collecteurs' %}" >
-              <span>collecteur</span>
-            </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:vendeurs' %}" >
-            <span>vendeur</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:commandes' %}" >
-            <span>command</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:history_commandes' %}" >
-            <span>historique des command</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'users:logout' %}">
-            <span>Logout</span>
-          </a>
-        </li>
+        <li class="breadcrumb-item active">Categories</li>
       </ul>
     </div>
+    <div class="col-auto text-right float-right ml-auto">
+      <a href="{% url 'collecteur:addcategory'  %}" class="btn btn-outline-primary mr-2"
+        ></i> add new Category</a
+      >
+      
+    </div>
   </div>
-    <div class="content">
-        <h1>List des categories</h1>
-        <table>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card card-table">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+   id="table_id"
+     class="table table-hover table-center mb-0 "
+   > 
             <thead>
-                <tr>
-                    <th>category ID</th>
-                    <th>category Name</th>
-                    <th>action</th>
-                </tr>
+              <tr>
+                <th>category ID</th>
+                <th>category Name</th>
+
+                <th class="text-right">Action</th>
+              </tr>
             </thead>
             <tbody>
-              <tr>
-                  <td>---------</td>
-                  <td>---------</td>
 
-                  <td>
-                    <a href="{% url 'collecteur:addcategory' %}">ajoute</a> 
-                  </td>
-              </tr>
               {% for cate in category %}
+              <tr>
+                <td>{{cate.id}}</td>
+                <td>
+                  <h2>
+                    <a>{{cate.title}}</a>
+                  </h2>
+                </td>
+              
+                <td class="text-right">
+                  <div class="actions">
+                    <a
+                      href="{% url 'collecteur:updatecategory' cate.id %}"
+                      class="btn btn-sm bg-success-light mr-2"
+                    >
+                      <i class="fas fa-pen"></i>
+                    </a>
+                    <a href="{% url 'collecteur:deletecategory' cate.id %}" class="btn btn-sm bg-danger-light">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
                 
-                <tr>
-                    <td>{{cate.id}}</td>
-                    <td>{{cate.title}}</td>
+              {% endfor %}
 
-                    <td>
-                      <a href="{% url 'collecteur:updatecategory' cate.id %}">update</a> 
-                      <a href="{% url 'collecteur:deletecategory' cate.id %}">delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
- 
-                <!-- Add more rows as needed -->
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
     </div>
-</body>
-</html>
+  </div>
+</div>
+{% endblock content %}

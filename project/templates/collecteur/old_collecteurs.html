@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/table.css' %}">
+
+</head>
+<body>
+  <div class="contaner">
+    <div class="home2">
+      <div class="logo">
+        <img src="../my photo/LOGOO.jpg" alt="logo" />
+      </div>
+      <ul>
+        <li>
+          <a href="{% url 'collecteur:home' %}" >
+            <span>dashbord</span>
+          </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:AllCategories' %}" >
+              <span>categories</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:products' %}" >
+              <span>products</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:collecteurs' %}" >
+              <span>collecteur</span>
+            </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:vendeurs' %}" >
+            <span>vendeur</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:commandes' %}" >
+            <span>command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:history_commandes' %}" >
+            <span>historique des command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'users:logout' %}">
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+    <div class="content">
+        <h1>List of Collecteurs</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Collecteur ID</th>
+                    <th>Collecteur Name</th>
+                    <th>Collecteur Email</th>
+                    <th>numero</th>
+                    <th>address</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td>------------------</td>
+                  <td>------------------</td>
+                  <td>------------------</td>
+                  <td>------------------</td>
+                  <td>------------------</td>
+
+                  <td>
+                    <a href="{% url 'users:add_collectuer' %}">ajoute</a> 
+                  </td>
+              </tr>
+              {% for persone in collecteurs %}
+                
+                <tr>
+                    <td>{{persone.id}}</td>
+                    <td>{{persone.first_name}} {{persone.last_name}}</td>
+                    <td>{{persone.email}}</td>
+                    <td>{{persone.phone}}</td>
+                    <td>{{persone.address}}</td>
+
+                    <td>
+                      <a href="{% url 'users:block' persone.id  %}">block</a> 
+                      <a href="{% url 'users:delete' persone.id  %}">delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+ 
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

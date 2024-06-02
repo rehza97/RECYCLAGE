@@ -1,0 +1,28 @@
+<div id="sidebar-menu" class="sidebar-menu">
+   <ul>
+      <li class="menu-title">
+         <span>Main Menu</span>
+      </li>
+      <li>
+        <a href="collecteur:home"><i class="fas fa-clipboard-list"></i> <span>Dashboard</span></a>
+     </li>
+
+
+      <li class="submenu">
+        <a href="#"><i class="fas fa-user-graduate"></i> <span>Collectuers</span> <span class="menu-arrow"></span></a>
+        <ul>
+           <li><a href="{% url 'collecteur:collecteurs' %}">Collectuers List</a></li>
+        </ul>
+     </li>
+      <li>
+         <a href="{% url 'collecteur:vendeurs' %}"><i class="fas fa-holly-berry"></i> <span>vendeur</span></a>
+      </li>
+      <li>
+         <a href="{% url 'collecteur:commandes' %}"><i class="fas fa-comment-dollar"></i> <span>Commandes</span></a>
+      </li>
+      <li>
+         <a href="{% url 'collecteur:history_commandes' %}"><i class="fas fa-clipboard-list"></i> <span>Commands archives</span></a>
+      </li>
+      
+   </ul>
+</div>

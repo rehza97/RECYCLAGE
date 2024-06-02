@@ -59,14 +59,14 @@ def register_user(request):
                 fail_silently=False,
             )
     # ////////////////////////////////////////////////////
-            return redirect('users:login')
+            return redirect('login')
     else:
         form = ResisterUserForm()
 
-    return render(request, 'users/signUp.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form})
 
 
-@login_required(login_url="users:login")
+@login_required(login_url="login")
 def add_collectuer(request):
     User = get_user_model()
 
@@ -92,7 +92,7 @@ def add_collectuer(request):
                 fail_silently=False,
             )
     # ////////////////////////////////////////////////////
-            return redirect('users:login')
+            return redirect('login')
     else:
         form = ResisterUserForm()
 
@@ -134,18 +134,19 @@ def login_user(request):
                 return redirect('collecteur:home')
 
         else:
-            messages.error(request, 'something went wrong')
-            return redirect('users:login')
+            messages.error(request, 'please retype your email and password carrfully')
+            return redirect('login')
     return render(request, 'users/login.html')
 
 
 def logout_user(request):
+    user = request.user
     logout(request)
-    messages.info(request, '3awd walilana ki tahna')
-    return redirect('users:login')
+    messages.info(request, f'good bye Mr {user.first_name} {user.last_name} please revitie us soon')
+    return redirect('login')
 
 
-@login_required(login_url="users:login")
+@login_required(login_url="login")
 def block_user(request, id):
     user = User.objects.get(id=id)
     print(user)
@@ -158,7 +159,7 @@ def block_user(request, id):
         return redirect('collecteur:vendeurs')
 
 
-@login_required(login_url="users:login")
+@login_required(login_url="login")
 def delete_user(request, id):
     user = User.objects.get(id=id)
     if user.collecteur:

@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/details.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="home">
+        <div class="logo">
+          <img src="../my photo/LOGOO.jpg" alt="logo" />
+        </div>
+        <ul>
+
+          <li>
+            <a href="{% url 'vendeur:categories' %}" >
+              <span class="icon"><i class="fas fa-user-friends"></i></span>
+              <span>categories</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'vendeur:poubelle' %}" >
+              <span class="icon"><i class="fa-solid fa-box"></i></span>
+              <span>poubelle</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'vendeur:poubelle' %}" >
+              <span class="icon"><i class="fa-solid fa-box"></i></span>
+              <span>mes commandes</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'users:logout' %}">
+              <span class="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    <div class="product-details">
+        <div class="product-image">
+            <img src="{{product.image.url}}" alt="Product 1">
+        </div>
+        <div class="product-info">
+            <h2>{{product.title}}</h2>
+            <p>Price: {{product.price_per_kilo}} DZD/Kg</p>
+            <p>type: {{product.type}}</p>
+            <p>Description: {{product.desc}}</p>
+            <p>Category: {{product.category}}</p>
+            <form action="{% url 'vendeur:add' product.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" ">
+                <div class="amount-selector">
+                    <button type="button" onclick="decreaseAmount()">-</button>
+                    <input type="number" id="amount" name="quantity" value="1">
+                    <button type="button" onclick="increaseAmount()">+</button>
+                </div>
+                <p>total price: <span id="price"> {{product.price_per_kilo}} </span>DZD</p>
+
+
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    function increaseAmount() {
+    var amountInput = document.getElementById("amount");
+    var currentAmount = parseInt(amountInput.value);
+    amountInput.value = currentAmount + 1;
+    updateTotalPrice();
+}
+
+function decreaseAmount() {
+    var amountInput = document.getElementById("amount");
+    var currentAmount = parseInt(amountInput.value);
+    if (currentAmount > 1) {
+        amountInput.value = currentAmount - 1;
+        updateTotalPrice();
+    }
+}
+
+function updateTotalPrice() {
+    var amountInput = document.getElementById("amount");
+    var quantity = parseInt(amountInput.value);
+    var pricePerKilo = parseFloat("{{ product.price_per_kilo }}");
+    var totalPrice = quantity * pricePerKilo;
+    document.getElementById('price').innerHTML = totalPrice.toFixed(2);
+}
+
+</script>
+
+</body>
+</html>

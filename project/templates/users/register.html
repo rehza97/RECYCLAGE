@@ -1,0 +1,156 @@
+{% load static %}
+ {% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Mirrored from preschool.dreamguystech.com/html-template/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Oct 2021 11:11:58 GMT -->
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+    <title>Preskool - Register</title>
+
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}"
+    />
+
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+  </head>
+  <body>
+    <div class="main-wrapper login-body">
+        <div class="login-wrapper">
+            <div class="container">
+                <div class="loginbox">
+                    <div class="login-left">
+                        <img class="img-fluid" src="{% static 'img/logo.png' %}" alt="Logo">
+                    </div>
+                    <div class="login-right">
+                        <div class="login-right-wrap">
+                            <h1>Register</h1>
+                            <p class="account-subtitle">Access to our dashboard</p>
+                            {% if messages %}
+                        
+                        <ul class="messages">
+                           {% for message in messages %}
+                           <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                           {% endfor %}
+                       </ul>
+                        {% endif %} 
+                            <!-- Multi-step form -->
+                            <form id="multi-step-form" method="POST">
+                                {% csrf_token %}
+                                <!-- Step 1 -->
+                                <fieldset>
+                                    <legend>personal information</legend>
+                                    <div class="form-group">
+                                        <label for="name">first name</label>
+                                        {% render_field form.first_name class="form-control" placeholder='first name' required=true %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">last name</label>
+                                        {% render_field form.last_name class="form-control" placeholder='last name' required=true %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Age</label>
+                                        {% render_field form.age  class="form-control" placeholder='age' required=true %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Gender</label>
+                                        {% render_field form.gender class="form-control" placeholder='gender' required=true %}
+                                    </div>
+                                   
+                                    <button class="btn btn-primary next-btn" data-step="2" type="button">Next</button>
+                                </fieldset>
+
+                                <!-- Step 2 -->
+                                <fieldset style="display: none;">
+                                    <legend>Account information</legend>
+                                    <!-- Add fields for step 2 -->
+                                    <div class="form-group">
+                                        <label for="additionalField">Email</label>
+                                        {% render_field form.username  class="form-control" placeholder='email' required=true %}
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="additionalField">Password</label>
+                                        {% render_field form.password1 class="form-control"  placeholder='password' required=true %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="additionalField">Password confirmation</label>
+                                        {% render_field form.password2 class="form-control" placeholder='password confirmation' required=true %}
+                                    </div>
+                                    <button class="btn btn-primary next-btn" data-step="3" type="button">Next</button>
+                                    <button class="btn btn-secondary prev-btn" data-step="1" type="button">Previous</button>
+                                </fieldset>
+
+                                <!-- Step 3 -->
+                                <fieldset style="display: none;">
+                                    <legend>final step</legend>
+                                    <!-- Add fields for step 3 -->
+                                    <div class="form-group">
+                                        <label for="additionalFieldStep3">Phone number</label>
+                                        {% render_field form.phone class="form-control" placeholder='phone number' required=true %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="additionalFieldStep3">Address</label>
+                                        {% render_field form.address class="form-control" placeholder='address' required=true %}
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Register</button>
+                                    <button class="btn btn-secondary prev-btn" data-step="2" type="button">Previous</button>
+                                </fieldset>
+                            </form>
+                            <div class="login-or">
+                                <span class="or-line"></span>
+                                <span class="span-or">or</span>
+                              </div>
+              
+                              <div class="text-center dont-have">
+                                Already have an account? <a href="{% url 'login' %}">Login</a>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <!-- Include your other JavaScript files -->
+    <script>
+        $(document).ready(function(){
+            // Next button functionality
+            $(".next-btn").click(function(){
+                var currentStep = $(this).closest("fieldset");
+                var nextStep = currentStep.next("fieldset");
+                currentStep.hide();
+                nextStep.show();
+            });
+
+            // Previous button functionality
+            $(".prev-btn").click(function(){
+                var currentStep = $(this).closest("fieldset");
+                var prevStep = currentStep.prev("fieldset");
+                currentStep.hide();
+                prevStep.show();
+            });
+        });
+    </script>
+</body>
+</html>

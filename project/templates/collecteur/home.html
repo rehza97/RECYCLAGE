@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+{% block title %}
+  dashboard
+{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+    <div class="row">
+       <div class="col-sm-12">
+          <h3 class="page-title">Welcome {{request.user.first_name}} {{request.user.last_name}}!</h3>
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item active">Dashboard</li>
+          </ul>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+       <div class="card bg-one w-100">
+          <div class="card-body">
+             <div class="db-widgets d-flex justify-content-between align-items-center">
+                <div class="db-icon">
+                   <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="db-info">
+                   <h3>{{vendeurs_count}}</h3>
+                   <h6>Vendeurs</h6>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+       <div class="card bg-two w-100">
+          <div class="card-body">
+             <div class="db-widgets d-flex justify-content-between align-items-center">
+                <div class="db-icon">
+                   <i class="fas fa-crown"></i>
+                </div>
+                <div class="db-info">
+                   <h3>{{collecteurs_count}}</h3>
+                   <h6>collecteurs</h6>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+       <div class="card bg-three w-100">
+          <div class="card-body">
+             <div class="db-widgets d-flex justify-content-between align-items-center">
+                <div class="db-icon">
+                   <i class="fas fa-building"></i>
+                </div>
+                <div class="db-info">
+                   <h3>{{commandes_count}}</h3>
+                   <h6>commandes on hold</h6>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+       <div class="card bg-four w-100">
+          <div class="card-body">
+             <div class="db-widgets d-flex justify-content-between align-items-center">
+                <div class="db-icon">
+                   <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div class="db-info">
+                   <h3>{{commandes_collected_count}}</h3>
+                   <h6>commandes collected</h6>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+
+ </div>
+ <div class="row">
+    <div class="col-md-6 d-flex">
+       <div class="card flex-fill">
+          <div class="card-header">
+             <h5 class="card-title">Vendeurs</h5>
+          </div>
+          <div class="card-body">
+             <div class="table-responsive">
+                <table class="table table-hover table-center">
+                   <thead class="thead-light">
+                      <tr>
+                         
+                         <th>Name</th>
+                         <th class="text-center">Email</th>
+                         <th class="text-center">Numero</th>
+                         <th class="text-right">Address</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                    {% for vendeur in vendeurs %}
+                    <tr>
+
+                         <td class="text-nowrap">{{vendeur.first_name}} {{vendeur.last_name}}</td>
+                         <td class="text-center">{{vendeur.username}}</td>
+                         <td class="text-center">{{vendeur.phone}}</td>
+                         <td class="text-right">
+                            <div>{{vendeur.address}}</div>
+                         </td>
+                      </tr>
+                      
+                    {% endfor %}
+                   </tbody>
+                </table>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-md-6 d-flex">
+       <div class="card flex-fill">
+          <div class="card-header">
+             <h5 class="card-title">New Collecteurs</h5>
+          </div>
+          <div class="card-body">
+             <div class="table-responsive">
+                <table class="table table-hover table-center">
+                    <thead class="thead-light">
+                       <tr>
+                         
+                          <th>Name</th>
+                          <th class="text-center">Email</th>
+                          <th class="text-center">Numero</th>
+                          <th class="text-right">Address</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                     {% for collecteur in collecteurs %}
+                     <tr>
+                          <td class="text-nowrap">{{collecteur.first_name}} {{collecteur.last_name}}</td>
+                          <td class="text-center">{{collecteur.username}}</td>
+                          <td class="text-center">{{collecteur.phone}}</td>
+                          <td class="text-right">
+                             <div>{{collecteur.address}}</div>
+                          </td>
+                       </tr>
+                       
+                     {% endfor %}
+                    </tbody>
+                 </table>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-md-6 d-flex">
+       <div class="card flex-fill">
+          <div class="card-header">
+             <h5 class="card-title">New Commands on hold</h5>
+          </div>
+          <div class="card-body">
+             <div class="table-responsive">
+                <table class="table table-hover table-center">
+                    <thead class="thead-light">
+                       <tr>
+                         <th>ID</th>
+                          <th>date</th>
+                          <th class="text-center">vendeur</th>
+
+                          
+                       </tr>
+                    </thead>
+                    <tbody>
+                     {% for commande in commandes %}
+                     <tr>
+                        <td class="text-nowrap">
+                            <div>{{commande.id}}</div>
+                         </td>
+                          <td class="text-nowrap">{{commande.created_date}}</td>
+                          <td class="text-center">{{commande.user.first_name}} {{commande.user.last_name}}</td>
+
+                       </tr>
+                       
+                     {% endfor %}
+                    </tbody>
+                 </table>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-md-6 d-flex">
+       <div class="card flex-fill">
+          <div class="card-header">
+             <h5 class="card-title">lestest Commands Collected</h5>
+          </div>
+          <div class="card-body">
+             <div class="table-responsive">
+                <table class="table table-hover table-center">
+                    <thead class="thead-light">
+                       <tr>
+                         <th>ID</th>
+                          <th>date</th>
+                          <th class="text-center">Vendeur</th>
+                          <th class="text-center">Collecteur</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                     {% for commande in commandes_collected %}
+                     <tr>
+                        <td class="text-nowrap">
+                            <div>{{commande.id}}</div>
+                         </td>
+                          <td class="text-nowrap">{{commande.created_date}}</td>
+                          <td class="text-center">{{commande.user.first_name}} {{commande.user.last_name}}</td>
+                          <td class="text-center">{{commande.celletuer.first_name}} {{commande.celletuer.last_name}}</td>
+
+                       </tr>
+                       
+                     {% endfor %}
+                    </tbody>
+                 </table>
+             </div>
+          </div>
+       </div>
+    </div>
+
+
+ </div>
+ <div class="row">
+    <div class="col-xl-3 col-sm-6 col-12">
+       <div class="card flex-fill fb sm-box">
+          <i class="fab fa-facebook"></i>
+          <h6>50,095</h6>
+          <p>Likes</p>
+       </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+       <div class="card flex-fill twitter sm-box">
+          <i class="fab fa-twitter"></i>
+          <h6>48,596</h6>
+          <p>Follows</p>
+       </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+       <div class="card flex-fill insta sm-box">
+          <i class="fab fa-instagram"></i>
+          <h6>52,085</h6>
+          <p>Follows</p>
+       </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+       <div class="card flex-fill linkedin sm-box">
+          <i class="fab fa-linkedin-in"></i>
+          <h6>69,050</h6>
+          <p>Follows</p>
+       </div>
+    </div>
+ </div>
+{% endblock content %}

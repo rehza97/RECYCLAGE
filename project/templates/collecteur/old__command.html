@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    
+    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/table.css' %}">
+
+</head>
+<body>
+  <div class="contaner">
+    <div class="home2">
+      <div class="logo">
+        <img src="../my photo/LOGOO.jpg" alt="logo" />
+      </div>
+      <ul>
+        <li>
+          <a href="{% url 'collecteur:home' %}" >
+            <span>dashbord</span>
+          </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:AllCategories' %}" >
+              <span>categories</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:products' %}" >
+              <span>products</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'collecteur:collecteurs' %}" >
+              <span>collecteur</span>
+            </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:vendeurs' %}" >
+            <span>vendeur</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:commandes' %}" >
+            <span>command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'collecteur:history_commandes' %}" >
+            <span>historique des command</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'users:logout' %}">
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+      <div class="content" >
+        <h1>List of command</h1>
+        <table >
+            <thead>
+            <tr>
+                <td>command_id</td>
+                <td>command_date</td>
+                <td>vendeur</td>
+                <td>command_etat</td>
+                <td>collecteur_id</td>          
+              </tr>
+          </thead>
+          <tbody>
+            {% for cmd in commande %}
+              
+              <tr>
+                  <td>{{cmd.id}}</td>
+                  <td>{{cmd.created_date}} {{cmd.last_name}}</td>
+                  <td>{{cmd.user.first_name}} {{cmd.user.last_name}}  <br> {{cmd.user.phone}} </td>
+                  <td>
+                    collected 
+                  </td>
+                  <td>
+                      {% if cmd.selected %}
+                      {{cmd.celletuer.username}}
+                      {% else %}
+                      not have been selected by any collectuer
+                      
+                    {% endif %}
+                  </td>
+
+              </tr>
+              {% endfor %}
+
+              <!-- Add more rows as needed -->
+          </tbody>
+
+        </table >
+        </div>
+     
+  
+     
+</body>
+</html>

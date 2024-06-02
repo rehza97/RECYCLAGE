@@ -1,106 +1,84 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    
-    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
-    <link rel="stylesheet" href="{% static 'CSS/table.css' %}">
+{% extends "base.html" %}
 
-</head>
-<body>
-  <div class="contaner">
-    <div class="home2">
-      <div class="logo">
-        <img src="../my photo/LOGOO.jpg" alt="logo" />
-      </div>
-      <ul>
-        <li>
-          <a href="{% url 'collecteur:home' %}" >
-            <span>dashbord</span>
-          </a>
+{% block title %}
+  collecteurs
+{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">collecteurs</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'collecteur:home' %}">Dashboard</a>
         </li>
-        <li>
-            <a href="{% url 'collecteur:AllCategories' %}" >
-              <span>categories</span>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'collecteur:products' %}" >
-              <span>products</span>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'collecteur:collecteurs' %}" >
-              <span>collecteur</span>
-            </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:vendeurs' %}" >
-            <span>vendeur</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:commandes' %}" >
-            <span>command</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:history_commandes' %}" >
-            <span>historique des command</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'users:logout' %}">
-            <span>Logout</span>
-          </a>
-        </li>
+        <li class="breadcrumb-item active">collecteurs</li>
       </ul>
     </div>
+    <div class="col-auto text-right float-right ml-auto">
+      <a href="{% url 'add_collectuer' %}" class="btn btn-outline-primary mr-2"
+        ></i> add new collecteur</a
+      >
+      
+    </div>
   </div>
-      <div class="content" >
-        <h1>List of command</h1>
-        <table >
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card card-table">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+   id="table_id"
+     class="table table-hover table-center mb-0 "
+   > 
             <thead>
-            <tr>
-                <td>command_id</td>
-                <td>command_date</td>
-                <td>vendeur</td>
-                <td>command_etat</td>
-                <td>collecteur_id</td>          
-              </tr>
-          </thead>
-          <tbody>
-            {% for cmd in commande %}
-              
               <tr>
-                  <td>{{cmd.id}}</td>
-                  <td>{{cmd.created_date}} {{cmd.last_name}}</td>
-                  <td>{{cmd.user.first_name}} {{cmd.user.last_name}}  <br> {{cmd.user.phone}} </td>
-                  <td>
-                    collected 
-                  </td>
-                  <td>
-                      {% if cmd.selected %}
-                      {{cmd.celletuer.username}}
-                      {% else %}
-                      not have been selected by any collectuer
-                      
-                    {% endif %}
-                  </td>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Vendeur</th>
+                <th>Status</th>
+                <th>Selected By</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for cmd in commande %}
+              <tr>
+                <td>{{cmd.id}}</td>
+                <td>
+                  <h2>
+                    <a>{{cmd.created_date}}</a>
+                  </h2>
+                </td>
+                <td>{{cmd.user.first_name}} {{cmd.user.last_name}}  <br> {{cmd.user.phone}} </td>
+                <td>
+                  {% if cmd.selected %}
+                  entrain de collecter
+                  {% else %}
+                  en attente
+                  {% endif %}  
+                </td>
+                <td>
+                  {% if cmd.selected %}
+                    
+                    <span class="badge badge-danger">{{cmd.celletuer.username}}</span>
+                    {% else %}
+                    <span class="badge badge-success">Not Selected yet</span>
+                    
+                  {% endif %}
+                </td>
 
               </tr>
+                
               {% endfor %}
 
-              <!-- Add more rows as needed -->
-          </tbody>
-
-        </table >
+            </tbody>
+          </table>
         </div>
-     
-  
-     
-</body>
-</html>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   {% static '' %}
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+      <title>
+        {% block title %}
+          
+        {% endblock title %}
+      </title>
+      <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap">
+      <link rel="stylesheet" href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}">
+      <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+   </head>
+   <body>
+      <div class="main-wrapper">
+         <div class="header">
+            <div class="header-left">
+               <a href="index.html" class="logo">
+               <img src="{% static 'img/ver_logo.png' %}" alt="Logo">
+               </a>
+               <a href="index.html" class="logo logo-small">
+               <img src="{% static 'assets/img/logo-small.png' %}" alt="Logo" width="30" height="30">
+               </a>
+            </div>
+            <a href="javascript:void(0);" id="toggle_btn">
+            <i class="fas fa-align-left"></i>
+            </a>
+            <div class="top-nav-search">
+               <form>
+                  <input type="text" class="form-control" placeholder="Search here">
+                  <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+               </form>
+            </div>
+            <a class="mobile_btn" id="mobile_btn">
+            <i class="fas fa-bars"></i>
+            </a>
+            <ul class="nav user-menu">
+
+               <li class="nav-item dropdown has-arrow">
+                  <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <span class="user-img"><img class="rounded-circle" src="{% static 'img/vendeur.png' %}" width="31" alt="Ryan Taylor"></span>
+                  </a>
+                  <div class="dropdown-menu">
+                     <div class="user-header">
+                        <div class="avatar avatar-sm">
+                           <img src="{% static 'img/vendeur.png' %}" alt="User Image" class="avatar-img rounded-circle">
+                        </div>
+                        <div class="user-text">
+                           <h6>{{user.first_name}} {{user.last_name}}</h6>
+                           {% if user.vendeur %}
+                           <p class="text-muted mb-0">vendeur</p>
+                           {% elif user.collecteur %}
+                           <p class="text-muted mb-0">collecteur</p>
+                           {% else %}
+                           <p class="text-muted mb-0">Administrator</p>
+                             
+                           {% endif %}
+            
+                        </div>
+                     </div>
+                     <a class="dropdown-item" href="profile.html">My Profile</a>
+                     {% if user.vendeur %}
+                     <a class="dropdown-item" href="{% url 'vendeur:poubelle' %}">Mes Commandes</a>
+                     {% endif %}
+                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+               {% if user.vendeur %}
+               {% include "sidebar/vendeur.html" %}
+               {% elif user.collecteur %}
+               {% include "sidebar/collecteur.html" %}
+               {% else %}
+               {% include "sidebar/admin_collecteur.html" %}
+                 
+               {% endif %}
+
+            </div>
+         </div>
+
+         
+         <div class="page-wrapper">
+            <div class="content container-fluid">
+
+         {% block content %}
+           
+         
+         {% endblock content %}
+            </div>
+         </div>
+
+
+
+      </div>
+      <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+      <script src="{% static 'assets/js/popper.min.js' %}"></script>
+      <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+      <script src="{% static 'assets/plugins/apexchart/apexcharts.min.js' %}"></script>
+      <script src="{% static 'assets/plugins/apexchart/chart-data.js' %}"></script>
+      <script src="{% static 'assets/js/script.js' %}"></script>
+      <script src="{% static 'assets/plugins/datatables/datatables.min.js'%}"></script>
+
+
+        <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+
+        <script type="text/javascript">
+         $(document).ready(function () {
+             $('#table_id').dataTable();
+         });
+       </script>  
+   </body>
+   
+</html>

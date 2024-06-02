@@ -1,109 +1,93 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    
-    <link rel="stylesheet" href="{% static 'CSS/home2.css' %}">
-    <link rel="stylesheet" href="{% static 'CSS/table.css' %}">
+{% extends "base.html" %}
 
-</head>
-<body>
-  <div class="contaner">
-    <div class="home2">
-      <div class="logo">
-        <img src="../my photo/LOGOO.jpg" alt="logo" />
-      </div>
-      <ul>
-        <li>
-          <a href="{% url 'collecteur:home' %}" >
-            <span>dashbord</span>
-          </a>
+{% block title %}
+  collecteurs
+{% endblock title %}
+
+{% block content %}
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">collecteurs</h3>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'collecteur:home' %}">Dashboard</a>
         </li>
-        <li>
-            <a href="{% url 'collecteur:AllCategories' %}" >
-              <span>categories</span>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'collecteur:products' %}" >
-              <span>products</span>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'collecteur:collecteurs' %}" >
-              <span>collecteur</span>
-            </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:vendeurs' %}" >
-            <span>vendeur</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:commandes' %}" >
-            <span>command</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'collecteur:history_commandes' %}" >
-            <span>historique des command</span>
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'users:logout' %}">
-            <span>Logout</span>
-          </a>
-        </li>
+        <li class="breadcrumb-item active">collecteurs</li>
       </ul>
     </div>
+    {% if user.collecteur %}
+      
+    {% else %}
+    <div class="col-auto text-right float-right ml-auto">
+      <a href="{% url 'add_collectuer' %}" class="btn btn-outline-primary mr-2"
+        ></i> add new collecteur</a
+      >
+      
+    </div>
+    {% endif %}
   </div>
-    <div class="content">
-        <h1>List of Collecteurs</h1>
-        <table>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card card-table">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+   id="table_id"
+     class="table table-hover table-center mb-0 "
+   > 
             <thead>
-                <tr>
-                    <th>Collecteur ID</th>
-                    <th>Collecteur Name</th>
-                    <th>Collecteur Email</th>
-                    <th>numero</th>
-                    <th>address</th>
-                    <th>action</th>
-                </tr>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+
+                <th class="text-right">Action</th>
+              </tr>
             </thead>
             <tbody>
+
+                {% for persone in collecteurs %}
               <tr>
-                  <td>------------------</td>
-                  <td>------------------</td>
-                  <td>------------------</td>
-                  <td>------------------</td>
-                  <td>------------------</td>
+                <td>{{persone.id}}</td>
+                <td>
+                  <h2>
+                    <a>{{persone.first_name}} {{persone.last_name}}</a>
+                  </h2>
+                </td>
+                <td>{{persone.email}}</td>
+                <td>{{persone.phone}}</td>
+                <td>{{persone.address}}</td>
+                <td class="text-right">
+                  {% if user.collecteur %}
+      
+                  {% else %}                    
+                  <div class="actions">
+                    <a
+                      href="{% url 'block' persone.id  %}"
+                      class="btn btn-sm bg-success-light mr-2"
+                    >
+                    <i class="fas fa-user-alt-slash"></i>
+                    </a>
+                    <a href="{% url 'delete' persone.id  %}" class="btn btn-sm bg-danger-light">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </div>
+                  {% endif %}
 
-                  <td>
-                    <a href="{% url 'users:add_collectuer' %}">ajoute</a> 
-                  </td>
+                </td>
               </tr>
-              {% for persone in collecteurs %}
                 
-                <tr>
-                    <td>{{persone.id}}</td>
-                    <td>{{persone.first_name}} {{persone.last_name}}</td>
-                    <td>{{persone.email}}</td>
-                    <td>{{persone.phone}}</td>
-                    <td>{{persone.address}}</td>
+              {% endfor %}
 
-                    <td>
-                      <a href="{% url 'users:block' persone.id  %}">block</a> 
-                      <a href="{% url 'users:delete' persone.id  %}">delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
- 
-                <!-- Add more rows as needed -->
             </tbody>
-        </table>
+          </table>
+        </div>
+      </div>
     </div>
-</body>
-</html>
+  </div>
+</div>
+{% endblock content %}

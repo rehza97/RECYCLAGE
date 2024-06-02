@@ -1,0 +1,31 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add collecteur</title>
+    <link rel="stylesheet" href="{% static 'CSS/SignUp.css' %}">
+</head>
+<body>
+    <form class="box" method="POST">
+        <div class="logo">
+            <img src="{% static 'img/LOGOO.jpg' %}" alt="logo" />
+        </div>
+        <h1>ajoute un collectuer</h1>
+        {% csrf_token %}
+
+        {% render_field form.last_name  placeholder='first name' required=true %}
+        {% render_field form.first_name  placeholder='last name' required=true %}
+        {% render_field form.username  placeholder='email' required=true %}
+        {% render_field form.password1  placeholder='password' required=true %}
+        {% render_field form.password2  placeholder='password confirmation' required=true %}
+        {% render_field form.age  placeholder='age' required=true %}
+        {% render_field form.phone  placeholder='phone number' required=true %}
+        {% render_field form.address  placeholder='address' required=true %}
+        {% render_field form.gender  placeholder='gender' required=true %}
+        <input type="submit" value="ajoute">
+    </form>
+</body>
+</html>
